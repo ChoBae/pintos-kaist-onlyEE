@@ -751,7 +751,7 @@ lazy_load_segment (struct page *page, void *aux) {
 	/* TODO: VA is available when calling this function. */
 	printf("============check lazy_load_segment=============\n");
 	struct file_info *file_info = (struct file_info *)aux;
-	vm_claim_page(page->va);
+	v_claim_page(page->vma);
 	if (file_read (&page->file, page->frame->kva, file_info->read_bytes) != (int) file_info->zero_bytes) {
 		palloc_free_page (page->frame->kva);
 		return false;

@@ -88,8 +88,8 @@ spt_find_page (struct supplemental_page_table *spt UNUSED, void *va UNUSED) {
 	if (page == NULL) return NULL;
 	struct page *ret = NULL;
 	struct hash_elem *e = NULL;
-	page->va = pg_round_down(va);
-	e = hash_find(&spt->spt_hash, &page->hash_elem);
+	page->va = pg_round_down(va); // va가 가르키는 페이지의 시작인 va (해당 페이지의 offset 0 주소)를 리턴해줌.
+	e = hash_find(&spt->spt_hash, &page->hash_elem);	// spt 내에서 해당 페이지를 찾는다.
 	if (e)
 		ret = hash_entry(e, struct page, hash_elem);
 	else {
@@ -181,7 +181,7 @@ vm_try_handle_fault (struct intr_frame *f UNUSED, void *addr UNUSED,
 	printf("rsp=%p\nfault_addr=%p\n user=%d\n write=%d\n not_present=%d\n", f->rsp, addr, user, write, not_present);
 	if (page = spt_find_page(spt, addr) == NULL || true)
 	{
-		
+	
 		printf("=============check vm_try_handle_fault_page_fault ture ==============\n");
 		return vm_do_claim_page (page);
 	}
