@@ -81,9 +81,10 @@ err:
 }
 
 /* Find VA from spt and return page. On error, return NULL. */
+// spt에서 해당 va를 가지고 있는 elem을 찾아서 그에 맞는 page를 반환하는 함수
 struct page *
 spt_find_page (struct supplemental_page_table *spt UNUSED, void *va UNUSED) {
-	struct page *page = (struct page *)malloc(sizeof page);
+	struct page *page = (struct page *)malloc(sizeof page);	// malloc을 통해서 빈 page를 만들어준다.
 	if (page == NULL) return NULL;
 	struct page *ret = NULL;
 	struct hash_elem *e = NULL;
